@@ -98,6 +98,17 @@ public class UserManager {
         return userList;
     }
 
+
+    public void deleteUserById(int id) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM user WHERE id=?");
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private User getUserFromResultSet(ResultSet resultSet) throws SQLException {
         return User.builder()
                 .id(resultSet.getInt(1))

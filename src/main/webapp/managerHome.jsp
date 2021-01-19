@@ -11,16 +11,26 @@
 <body>
 <%
     String userRegisterMsg = "";
+    String addTaskMessage = "";
+
     if (request.getSession().getAttribute("userRegisterMsg") != null) {
         userRegisterMsg = (String) request.getSession().getAttribute("userRegisterMsg");
         request.getSession().removeAttribute("userRegisterMsg");
     }
+
+    if (request.getSession().getAttribute("addTaskMessage") != null) {
+        addTaskMessage = (String) request.getSession().getAttribute("addTaskMessage");
+        request.getSession().removeAttribute("addTaskMessage");
+    }
     List<User> userList = (List<User>) request.getAttribute("allUsers");
     List<Task> taskList = (List<Task>) request.getAttribute("allTasks");
-%>
 
+    User currentUser = (User) request.getSession().getAttribute("currentUser");
+%>
+<b style="color: forestgreen">Welcome! <%=currentUser.getName()%> <%=currentUser.getSurname()%></b><br>
+<a href="/logout">Logout</a>
 <div>
-    <p><%=userRegisterMsg%>
+    <p style="color: darkred"><%=userRegisterMsg%>
     </p>
     <b>Add User</b> <br>
     <form action="/register" method="post">
@@ -35,6 +45,7 @@
 <br><br>
 
 <div>
+    <p style="color: darkred"><%=addTaskMessage%></p>
     <b>Add Task</b> <br>
     <form action="/addTask" method="post">
         Name: <input type="text" name="name"><br>
@@ -68,6 +79,7 @@
             <td>Name</td>
             <td>Surname</td>
             <td>Email</td>
+            <td>Action</td>
         </tr>
         <% for (User user : userList) {%>
         <tr>
@@ -79,6 +91,7 @@
             </td>
             <td><%=user.getEmail()%>
             </td>
+            <td><a href="/deleteUser?id=<%=user.getId()%>">Delete</a></td>
             <% }%>
         </tr>
     </table>
@@ -96,6 +109,7 @@
             <td>Assigned user</td>
         </tr>
         <%for (Task task : taskList) {%>
+        <tr>
         <td><%=task.getId()%>
         </td>
         <td><%=task.getName()%>
@@ -108,6 +122,7 @@
         </td>
         <td><%=task.getUser().getName()%>
         </td>
+        </tr>
         <%}%>
     </table>
 </div>

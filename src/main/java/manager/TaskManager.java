@@ -55,6 +55,48 @@ public class TaskManager {
         return taskList;
     }
 
+
+    public Task getTaskById(int taskId) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM task WHERE id=?");
+            statement.setInt(1, taskId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()){
+                return getTaskFromResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Task> getTasksByUser(int currentUserId) {
+        List<Task> taskList=new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM task WHERE user_id=?");
+            statement.setInt(1, currentUserId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                taskList.add(getTaskFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return taskList;
+    }
+
+    public void changeTaskStatus(String taskId, TaskStatus taskStatus) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("UPDATE task Set status=? WHERE id=?");
+            statement.setString(1,taskStatus.name());
+            statement.setString(2,taskId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     private Task getTaskFromResultSet(ResultSet resultSet) throws SQLException {
         return Task.builder()
                 .id(resultSet.getInt(1))
@@ -65,5 +107,8 @@ public class TaskManager {
                 .user(userManager.getUserById(resultSet.getInt(6)))
                 .build();
     }
+
+
+
 }
 

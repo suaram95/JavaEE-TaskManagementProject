@@ -48,9 +48,9 @@ public class AddTaskServlet extends HttpServlet {
                     .build();
             taskManager.addTask(task);
             addTaskMessage.append("Task was successfully added!");
-            req.getSession().setAttribute("addTaskMessage", addTaskMessage);
-            resp.sendRedirect("/managerHome");
         }
+        req.getSession().setAttribute("addTaskMessage", addTaskMessage.toString());
+        resp.sendRedirect("/managerHome");
 
 
     }

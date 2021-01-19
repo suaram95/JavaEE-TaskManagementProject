@@ -26,7 +26,7 @@ public class ManagerHomeServlet extends HttpServlet {
             req.setAttribute("allTasks", taskManager.getAllTasks());
             req.getRequestDispatcher("/managerHome.jsp").forward(req, resp);
         }else {
-            resp.sendRedirect("/login");
+            resp.sendRedirect("/login.jsp");
         }
     }
 }
