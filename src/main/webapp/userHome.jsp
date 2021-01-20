@@ -26,7 +26,7 @@
             <td>Description</td>
             <td>Deadline</td>
             <td>Status</td>
-            <td>Action</td>
+            <td>Update Status</td>
         </tr>
         <%for (Task task : tasksByUser) {%>
         <tr>
@@ -35,15 +35,16 @@
               <td><%=task.getDescription()%></td>
               <td><%=DateUtil.getStringFromDate(task.getDeadline())%></td>
               <td><%=task.getStatus()%></td>
-              <td><select name="taskStatus">
-                  <option value="NEW"><%=TaskStatus.NEW%>
-                  </option>
-                  <option value="DOING"><%=TaskStatus.DOING%>
-                  </option>
-                  <option value="FINISHED"><%=TaskStatus.FINISHED%>
-                  </option>
-              </select>
-                  <a href="/changeTaskStatus?id=<%=task.getId()%>">Change</a>
+              <td>
+                  <form action="/changeTaskStatus" method="post">
+                      <input type="hidden" name="taskId" value="<%=task.getId()%>">
+                      <select name="status">
+                          <option value="NEW">NEW</option>
+                          <option value="DOING">DOING</option>
+                          <option value="FINISHED">FINISHED</option>
+                      </select>
+                      <input type="submit" value="change">
+                  </form>
               </td>
 
 

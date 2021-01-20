@@ -85,16 +85,26 @@ public class TaskManager {
         return taskList;
     }
 
-    public void changeTaskStatus(String taskId, TaskStatus taskStatus) {
+    public void changeTaskStatus(int taskId, String taskStatus) {
         try {
             PreparedStatement statement = connection.prepareStatement("UPDATE task Set status=? WHERE id=?");
-            statement.setString(1,taskStatus.name());
-            statement.setString(2,taskId);
+            statement.setString(1,taskStatus);
+            statement.setInt(2,taskId);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 
+    public void changeTaskUser(int taskId, int userId) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("UPDATE task SET user_id=? WHERE id=?");
+            statement.setInt(1, userId);
+            statement.setInt(2, taskId);
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     private Task getTaskFromResultSet(ResultSet resultSet) throws SQLException {

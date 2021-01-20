@@ -3,6 +3,7 @@
 <%@ page import="model.Task" %>
 <%@ page import="model.TaskStatus" %>
 <%@ page import="util.DateUtil" %>
+<%@ page import="model.UserType" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -27,7 +28,8 @@
 
     User currentUser = (User) request.getSession().getAttribute("currentUser");
 %>
-<b style="color: forestgreen">Welcome! <%=currentUser.getName()%> <%=currentUser.getSurname()%></b><br>
+<b style="color: forestgreen">Welcome! <%=currentUser.getName()%> <%=currentUser.getSurname()%>
+</b><br>
 <a href="/logout">Logout</a>
 <div>
     <p style="color: darkred"><%=userRegisterMsg%>
@@ -45,7 +47,8 @@
 <br><br>
 
 <div>
-    <p style="color: darkred"><%=addTaskMessage%></p>
+    <p style="color: darkred"><%=addTaskMessage%>
+    </p>
     <b>Add Task</b> <br>
     <form action="/addTask" method="post">
         Name: <input type="text" name="name"><br>
@@ -91,8 +94,10 @@
             </td>
             <td><%=user.getEmail()%>
             </td>
-            <td><a href="/deleteUser?id=<%=user.getId()%>">Delete</a></td>
-            <% }%>
+            <td><%if (user.getUserType() != UserType.ADMIN) {%>
+                <a href="/deleteUser?id=<%=user.getId()%>">Delete</a></td>
+            <% }
+            }%>
         </tr>
     </table>
 </div>
@@ -107,21 +112,34 @@
             <td>Deadline</td>
             <td>Status</td>
             <td>Assigned user</td>
+            <td>Change User</td>
         </tr>
         <%for (Task task : taskList) {%>
         <tr>
-        <td><%=task.getId()%>
-        </td>
-        <td><%=task.getName()%>
-        </td>
-        <td><%=task.getDescription()%>
-        </td>
-        <td><%=DateUtil.getStringFromDate(task.getDeadline())%>
-        </td>
-        <td><%=task.getStatus()%>
-        </td>
-        <td><%=task.getUser().getName()%>
-        </td>
+            <td><%=task.getId()%>
+            </td>
+            <td><%=task.getName()%>
+            </td>
+            <td><%=task.getDescription()%>
+            </td>
+            <td><%=DateUtil.getStringFromDate(task.getDeadline())%>
+            </td>
+            <td><%=task.getStatus()%>
+            </td>
+            <td><%=task.getUser().getName() + " "+ task.getUser().getSurname()%>
+            </td>
+            <td>
+                <form action="/changeTaskUser" method="post">
+                    <input type="hidden" name="taskId" value="<%=task.getId()%>">
+                    User:<select name="userId">
+                    <%for (User user : userList) {%>
+                    <option value="<%=user.getId()%>"><%=user.getName()%> <%=user.getName()%>
+                    </option>
+                    <%}%>
+                </select>
+                    <input type="submit" value="Change">
+                </form>
+            </td>
         </tr>
         <%}%>
     </table>
