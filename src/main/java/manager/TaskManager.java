@@ -3,7 +3,6 @@ package manager;
 import db.DBConnectionProvider;
 import model.Task;
 import model.TaskStatus;
-import model.User;
 import util.DateUtil;
 
 import java.sql.*;

@@ -20,13 +20,10 @@ public class ManagerHomeServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User currentUser = (User) req.getSession().getAttribute("currentUser");
-        if (currentUser!=null&&currentUser.getUserType()== UserType.ADMIN){
+
             req.setAttribute("allUsers", userManager.getAllUsers());
             req.setAttribute("allTasks", taskManager.getAllTasks());
             req.getRequestDispatcher("/managerHome.jsp").forward(req, resp);
-        }else {
-            resp.sendRedirect("/login.jsp");
-        }
+
     }
 }

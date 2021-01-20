@@ -16,17 +16,14 @@ import java.util.List;
 @WebServlet(urlPatterns = "/userHome")
 public class UserHomeServlet extends HttpServlet {
 
-    private TaskManager taskManager=new TaskManager();
+    private TaskManager taskManager = new TaskManager();
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User currentUser = (User) req.getSession().getAttribute("currentUser");
-        if (currentUser!=null&&currentUser.getUserType()== UserType.USER){
-            List<Task> tasksByUser = taskManager.getTasksByUser(currentUser.getId());
-            req.setAttribute("tasksByUser", tasksByUser);
-            req.getRequestDispatcher("/userHome.jsp").forward(req,resp);
-        } else {
-            resp.sendRedirect("/login.jsp");
-        }
+        List<Task> tasksByUser = taskManager.getTasksByUser(currentUser.getId());
+        req.setAttribute("tasksByUser", tasksByUser);
+        req.getRequestDispatcher("/userHome.jsp").forward(req, resp);
+
     }
 }

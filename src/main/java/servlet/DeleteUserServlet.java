@@ -18,13 +18,9 @@ public class DeleteUserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User currentUser = (User) req.getSession().getAttribute("currentUser");
-        if (currentUser != null && currentUser.getUserType() == UserType.ADMIN) {
-            String id = req.getParameter("id");
-            userManager.deleteUserById(Integer.parseInt(id));
-            resp.sendRedirect("/managerHome");
-        } else {
-            resp.sendRedirect("/login.jsp");
-        }
+
+        String id = req.getParameter("id");
+        userManager.deleteUserById(Integer.parseInt(id));
+        resp.sendRedirect("/managerHome");
     }
 }
