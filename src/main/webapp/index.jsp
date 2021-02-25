@@ -8,5 +8,6 @@
 <b>Welcome to Task Management Project</b><br>
 Please <a href="/login.jsp">Login</a>
 <p>new p tag</p>
+<div class="newDiv"></div>
 </body>
 </html>
