@@ -20,5 +20,6 @@
         <input type="submit" value="Login">
     </form>
 </div>
+<div class="newDiv"></div>
 </body>
 </html>
