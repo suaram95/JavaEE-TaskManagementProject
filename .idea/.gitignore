@@ -1,0 +1,12 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Datasource local storage ignored files
+/../../../../../../../:\Aram\IT Space LLC\Projects 2021\WEB Java EE (Servlet-Jsp)\JavaEE-TaskManagementProject\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+libraries
+.idea/
+*.iml
+*.xml
